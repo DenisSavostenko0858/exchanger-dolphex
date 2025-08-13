@@ -1,12 +1,10 @@
-import DrawerAppBar from './components/header'
-import ExchangeComponent from './components/exchanger'
 import './App.css'
+import { Routers } from "./Router"
 
 function App() {
   return (
     <>
-    <DrawerAppBar />
-    <ExchangeComponent />
+    <Routers></Routers>
     </>
   )
 }

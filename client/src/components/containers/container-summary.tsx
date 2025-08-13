@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import '../assets/styles/container-exchanger.css';
+import '../../assets/styles/container-exchanger.css';
 
 interface SummaryCardProps {
   senderBank: {

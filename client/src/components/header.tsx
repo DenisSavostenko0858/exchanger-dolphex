@@ -12,6 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 import styles from '../assets/styles/styles.module.css';
 import logo from '../assets/image.png'; 
@@ -21,7 +22,13 @@ interface Props {
 }
 
 const drawerWidth = 240;
-const navItems =['Главная', 'Новости', 'Отзывы', 'Обращения', 'Правила📕']
+const navItems = [
+  { name: 'Главная', path: '/' },
+  { name: 'Новости', path: '/news' },
+  { name: 'Отзывы', path: '/reviews' },
+  { name: 'Обращения', path: '/appeal' },
+  { name: 'Правила📕', path: '/rules' }
+];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
@@ -34,19 +41,29 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box 
-        component="img"
-        src={logo}
-        alt="Логотип"
-        sx={{ 
-          height: 44, marginTop: "15px" 
-        }}
-      />
+        component={Link}
+        to="/"
+        sx={{ display: 'inline-block' }}
+      >
+        <Box 
+          component="img"
+          src={logo}
+          alt="Логотип"
+          sx={{ 
+            height: 44, marginTop: "15px" 
+          }}
+        />
+      </Box>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+          <ListItem key={item.name} disablePadding>
+            <ListItemButton 
+              component={Link}
+              to={item.path}
+              sx={{ textAlign: 'center' }}
+            >
+              <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -61,8 +78,20 @@ export default function DrawerAppBar(props: Props) {
           marginTop: "10px", 
           paddingTop: "20px"
         }}>
-          <Button sx={{width: "100%"}} className={`${styles.headerBtn} ${styles.loginBtn}`}>Войти</Button>
-          <Button sx={{width: "100%"}} className={`${styles.headerBtn} ${styles.registerBtn}`}>Регистрация</Button>
+          <Button
+            component={Link}
+            to="/login"
+            sx={{width: "100%"}}
+            className={`${styles.headerBtn} ${styles.loginBtn}`}>
+            Войти
+          </Button>
+          <Button
+            component={Link}
+            to="/register" 
+            sx={{width: "100%"}} 
+            className={`${styles.headerBtn} ${styles.registerBtn}`}>
+            Регистрация
+          </Button>
       </Box>
     </Box>
   );
@@ -84,35 +113,55 @@ export default function DrawerAppBar(props: Props) {
             <MenuIcon />
           </IconButton>
           <Box 
-            component="img"
-            src={logo}
-            alt="Логотип"
+            component={Link}
+            to="/"
             sx={{ 
-              height: 45, 
+              display: { xs: 'none', md: 'block' },
               flexGrow: 1,
-              display: { xs: 'none', md: 'block', marginRight: "10px" },
-              objectFit: 'contain' 
+              marginRight: "10px"
             }}
-          />
+          >
+            <Box 
+              component="img"
+              src={logo}
+              alt="Логотип"
+              sx={{ 
+                height: 45,
+                objectFit: 'contain' 
+              }}
+            />
+          </Box>
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }} className={styles.headerLink}>
-                {item}
+              <Button 
+                key={item.name}
+                component={Link}
+                to={item.path}
+                sx={{ color: '#fff' }} 
+                className={styles.headerLink}
+              >
+                {item.name}
               </Button>
             ))}
           </Box>
           <Box 
-            component="img"
-            src={logo}
-            alt="Логотип"
+            component={Link}
+            to="/"
             sx={{ 
               height: 44 
             }}
             className={styles.logoMob}
+          >
+          <Box 
+              component="img"
+              src={logo}
+              alt="Логотип"
+              sx={{ height: '100%' }}
           />
+          </Box>
           <Box className={`${styles.containerHeaderButtons} ${styles.containerHeaderButtonsMob}`}>
-            <Button className={`${styles.headerBtn} ${styles.loginBtn}`}>Войти</Button>
-            <Button className={`${styles.headerBtn} ${styles.registerBtn}`}>Регистрация</Button>
+            <Button component={Link} to="/login" className={`${styles.headerBtn} ${styles.loginBtn}`}>Войти</Button>
+            <Button component={Link} to="/register" className={`${styles.headerBtn} ${styles.registerBtn}`}>Регистрация</Button>
           </Box>
         </Toolbar>
       </AppBar>

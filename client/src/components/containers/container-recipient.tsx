@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import '../assets/styles/container-exchanger.css';
+import '../../assets/styles/container-exchanger.css';
 
 interface CurrencyButtonProps {
   currency: string;
@@ -10,8 +10,8 @@ interface CurrencyButtonProps {
 }
 
 interface ContainerProps {
-  selectedBank?: string;
-  onBankSelect?: (currency: string, icon: string) => void;
+  selectedCurrency?: string;
+  onCurrencySelect?: (currency: string, icon: string) => void;
 }
 
 const CurrencyButton: React.FC<CurrencyButtonProps> = ({ currency, icon, isSelected, onClick }) => (
@@ -39,14 +39,14 @@ const CurrencyButton: React.FC<CurrencyButtonProps> = ({ currency, icon, isSelec
   </motion.div>
 );
 
-const ContainerSender: React.FC<ContainerProps> = ({ 
-  selectedBank: propSelectedBank = 'Сбербанк', 
-  onBankSelect 
+const ContainerRecipient: React.FC<ContainerProps> = ({ 
+  selectedCurrency: propSelectedCurrency = 'USDT', 
+  onCurrencySelect 
 }) => {
-  const [internalSelectedBank, setInternalSelectedBank] = useState<string>(propSelectedBank);
+  const [internalSelectedCurrency, setInternalSelectedCurrency] = useState<string>(propSelectedCurrency);
   
-  // Всегда используем internalSelectedBank, который инициализирован значением propSelectedBank
-  const selectedBank = internalSelectedBank;
+  // Используем переданное значение или внутреннее состояние
+  const selectedCurrency = propSelectedCurrency !== undefined ? propSelectedCurrency : internalSelectedCurrency;
 
   const currencies = [
     { id: 'bank', name: 'Сбербанк', logo: '🏦' },
@@ -65,10 +65,10 @@ const ContainerSender: React.FC<ContainerProps> = ({
     { id: 'coin', name: 'Doge', logo: '🪙' },
   ];
 
-  const handleBankSelect = (currency: string, icon: string) => {
-    setInternalSelectedBank(currency);
-    if (onBankSelect) {
-      onBankSelect(currency, icon);
+  const handleCurrencySelect = (currency: string, icon: string) => {
+    setInternalSelectedCurrency(currency);
+    if (onCurrencySelect) {
+      onCurrencySelect(currency, icon);
     }
   };
 
@@ -79,10 +79,16 @@ const ContainerSender: React.FC<ContainerProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h3 className="selector-title"> 
-        Отправляете:
-      </h3>
-
+      <div style={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
+        <h3 className="selector-title" style={{border: "none"}}>
+          Получаете:
+        </h3>
+        <div style={{display:"flex", flexDirection: "row", justifyContent: "space-between", gap: "15px"}}>
+          <input type="button" value="Курс" className='button-container-recipient summary-button'/>
+          <input type="button" value="Резерв" className='button-container-recipient summary-button'/>
+        </div>
+      </div>
+      <div style={{borderTop: "1px solid rgba(0, 180, 255, 0.3)", marginTop: "-25px", marginBottom: "25px"}}></div>
       <div className="selected-item-container">
         <div className="flex justify-between items-center">
           <p className="selector-title">Выбрано:</p>
@@ -90,22 +96,22 @@ const ContainerSender: React.FC<ContainerProps> = ({
             className="selected-item"
             layoutId="selectedCurrency"
           >
-            <span className="font-mono text-cyan-300">{selectedBank}</span>
+            <span className="font-mono text-cyan-300">{selectedCurrency}</span>
             <div className="selected-item-icon">
-              {currencies.find(c => c.name === selectedBank)?.logo || '💳'}
+              {currencies.find(c => c.name === selectedCurrency)?.logo}
             </div>
           </motion.div>
         </div>
-      </div>      
-      
+      </div>   
+
       <div className="selector-cards-grid">
         {currencies.map((currency) => (
           <CurrencyButton
             key={currency.name}
             currency={currency.name}
             icon={currency.logo}
-            isSelected={selectedBank === currency.name}
-            onClick={() => handleBankSelect(currency.name, currency.logo)}
+            isSelected={selectedCurrency === currency.name}
+            onClick={() => handleCurrencySelect(currency.name, currency.logo)}
           />
         ))}
       </div>
@@ -113,4 +119,4 @@ const ContainerSender: React.FC<ContainerProps> = ({
   );
 };
 
-export default ContainerSender;
+export default ContainerRecipient;

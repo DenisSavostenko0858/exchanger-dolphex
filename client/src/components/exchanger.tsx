@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import ContainerRecipient from './container-recipient';
-import ContainerSender from './container-sender';
-import ContainerSummary from './container-summary';
+import ContainerRecipient from './containers/container-recipient';
+import ContainerSender from './containers/container-sender';
+import ContainerSummary from './containers/container-summary';
 
 const ParentExchangeContainer = () => {
   const [senderBank, setSenderBank] = useState({ name: 'Сбербанк', icon: '💳' });
