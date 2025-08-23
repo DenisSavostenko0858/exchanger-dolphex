@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
     width: 95%;
     background: rgba(5, 10, 30, 0.6) !important;
     color: white;
@@ -61,4 +60,9 @@
    .logo-container-head{
     display: none;
    } 
+}
+
+.text-rules{
+    align-items: start;
+    margin-bottom: 20px;
 }

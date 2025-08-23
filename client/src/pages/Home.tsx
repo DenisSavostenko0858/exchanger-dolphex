@@ -2,10 +2,33 @@ import DrawerAppBar from '../components/header'
 import ExchangeComponent from '../components/exchanger'
 import ContainerHead from '../components/containers/container-text-head'
 import Container from '../components/containers/container'
+import { useEffect, useState } from 'react'
 
 import '../App.css'
 
 function App() {
+    // Функция для прокрутки вверх
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', 
+    });
+  };
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
     <DrawerAppBar />
@@ -40,6 +63,42 @@ function App() {
             </ul>
       </Container>
     </div>
+    <div className='group-containers'>
+      <Container>
+        <h4 className="cosmic-title" style={{fontSize: "22px"}}>Список наиболее популярных направлений для обмена</h4>
+        <p>Самыми популярными направлениями для обмена на сайте Dolphex.io являются такие:</p>
+        <ul>
+          <li>Bitcoin (BTC) – Сбербанк RUB.</li>
+          <li>Bitcoin (BTC) – Райффайзен RUB.</li>
+          <li>Bitcoin (BTC) – Visa/MasterCard RUB.</li>
+          <li>Visa/MasterCard RUB – Bitcoin (BTC).</li>
+          <li>Райффайзен RUB – Bitcoin (BTC).</li>
+          <li>Сбербанк RUB – Bitcoin (BTC).</li>
+          <li>Ethereum (ETH) – Тинькофф RUB.</li>
+          <li>Ethereum (ETH) – ВТБ RUB.</li>
+          <li>ВТБ RUB – Tether TRC20 USDT.</li>
+          <li>Сбербанк RUB – Litecoin (LTC).</li>
+          <li>Tether TRC20 USDT – Тинькофф RUB.</li>
+          <li>Tether TRC20 USDT – QIWI RUB и множество других.</li>
+        </ul>
+      </Container>
+      <Container>
+        <h4 className="cosmic-title" style={{fontSize: "22px"}}>Вывод</h4>
+          <p>Основные преимущества сотрудничества с обменным пунктом видны даже невооруженным глазом. Для проведения быстрых, безопасных обменных операций платформа Dolphex.io подходит идеально.</p>
+          <p>А если у пользователя возникнут какие-то дополнительные вопросы касаемо работы площадки, то он сможет быстро получить ответы на них, обратившись в службу поддержки.</p>
+          <p>Функционал платформы очень удобен, а обмен происходит максимально быстро, и не нужно ждать по 2-3 часа, пока на ваш кошелек или карту не придут средства.</p>
+          <p>Направлений для обмена на площадке более чем достаточно, и всегда присутствуют резервы, а система безопасности, включающая в себя SSL-сертификат и многое другое, заслуживает уважения.</p>
+      </Container>
+    </div>
+    {/* Кнопка "Наверх" */}
+      {showButton && (
+        <button 
+          onClick={scrollToTop}
+          className="scroll-to-top-button"
+        >
+          ↑ Наверх
+        </button>
+      )}
     </>
   )
 }

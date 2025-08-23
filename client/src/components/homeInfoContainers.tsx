@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import ContainerRecipient from './containers/container-recipient';
-
 
 const HomeContainers = () => {
   return (

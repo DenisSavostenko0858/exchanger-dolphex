@@ -9,6 +9,7 @@ function ContainerHead() {
     <>
     <motion.div 
           className="containers"
+          style={{marginTop: "100px"}}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
