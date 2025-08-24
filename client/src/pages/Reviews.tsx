@@ -15,26 +15,28 @@ import {
   Backdrop,
   IconButton
 } from '@mui/material';
+
 import CloseIcon from '@mui/icons-material/Close';
 import logo from '../assets/image.png';
-import { newsData } from '../data/newsData';
+import { reviewsData } from '../data/reviewsData';
 import '../App.css';
+import '../assets/styles/news-reviews.css';
 
 const ITEMS_PER_PAGE = 8;
 
 function ReviewsPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedNews, setSelectedNews] = useState<typeof newsData[0] | null>(null);
+  const [selectedReviews, setSelectedReviews] = useState<typeof reviewsData[0] | null>(null);
   const [openModal, setOpenModal] = useState(false);
   
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentNews = newsData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  const totalPages = Math.ceil(newsData.length / ITEMS_PER_PAGE);
+  const currentReviews = reviewsData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(reviewsData.length / ITEMS_PER_PAGE);
 
-  const groupNews = (news: typeof newsData) => {
+  const groupReviews = (news: typeof reviewsData) => {
     const groups = [];
     for (let i = 0; i < news.length; i += 2) {
       groups.push(news.slice(i, i + 2));
@@ -42,21 +44,21 @@ function ReviewsPage() {
     return groups;
   };
 
-  const newsGroups = groupNews(currentNews);
+  const reviewsGroups = groupReviews(currentReviews);
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenModal = (news: typeof newsData[0]) => {
-    setSelectedNews(news);
+  const handleOpenModal = (reviews: typeof reviewsData[0]) => {
+    setSelectedReviews(reviews);
     setOpenModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    setSelectedNews(null);
+    setSelectedReviews(null);
   };
 
   return (
@@ -81,18 +83,18 @@ function ReviewsPage() {
 
         <div className='news-container'>
           <Container>
-            {/* Группы новостей */}
             <div style={{ marginTop: '32px', marginBottom: '40px' }}>
-              {newsGroups.map((group, groupIndex) => (
+              {reviewsGroups.map((group, groupIndex) => (
                 <div key={groupIndex} className="group" style={{ 
                   display: 'flex', 
                   gap: '24px', 
                   marginBottom: '32px',
                   flexDirection: isMobile ? 'column' : 'row'
                 }}>
-                  {group.map((news) => (
+                  {group.map((reviews) => (
                     <Card 
-                      key={news.id}
+                      key={reviews.id}
+                      className='card-info-container'
                       sx={{ 
                         flex: '1 1 calc(50% - 12px)',
                         minWidth: isMobile ? '100%' : '300px',
@@ -120,15 +122,15 @@ function ReviewsPage() {
                             gutterBottom 
                             variant="h6" 
                             component="h3"
+                            className='title'
                             sx={{ 
                               fontWeight: 'bold',
                               mb: 2,
                               lineHeight: 1.3,
                               fontSize: '1.1rem',
-                              color: 'black',
                             }}
                           >
-                            {news.title}
+                            {reviews.userName}
                           </Typography>
                           <Typography 
                             variant="body2" 
@@ -138,32 +140,38 @@ function ReviewsPage() {
                               WebkitLineClamp: 3,
                               WebkitBoxOrient: 'vertical',
                               overflow: 'hidden',
-                              color: 'black',
+                              color: 'white',
                               mb: 2
                             }}
                           >
-                            {news.description}
+                            {reviews.title}
+                          </Typography>
+                          <Typography 
+                            variant="body2" 
+                            sx={{ 
+                              lineHeight: 1.6,
+                              display: '-webkit-box',
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden',
+                              color: 'white',
+                              mb: 2
+                            }}
+                          >
+                            {reviews.date}
                           </Typography>
                         </Box>
-                        
-                        {/* Кнопка Подробно - всегда внизу */}
+                        {/* Кнопка подробнее */}
                         <Box sx={{ 
                           display: 'flex', 
-                          justifyContent: 'flex-start', // Выравнивание по левому краю
-                          mt: 'auto', // Прижимает к низу
-                          pt: 2 // Отступ сверху
+                          justifyContent: 'flex-start', 
+                          mt: 'auto',
+                          pt: 2 
                         }}>
                           <Button
                             variant="outlined"
-                            onClick={() => handleOpenModal(news)}
-                            sx={{
-                              color: '#00ff88',
-                              borderColor: '#00ff88',
-                              '&:hover': {
-                                borderColor: '#00ff88',
-                                backgroundColor: 'rgba(0, 255, 136, 0.1)'
-                              }
-                            }}
+                            onClick={() => handleOpenModal(reviews)}
+                            className='btn-card'
                           >
                             Подробно
                           </Button>
@@ -174,7 +182,6 @@ function ReviewsPage() {
                 </div>
               ))}
             </div>
-
             {/* Пагинация */}
             {totalPages > 1 && (
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 4 }}>
@@ -190,8 +197,8 @@ function ReviewsPage() {
                       fontWeight: 'bold',
                       color: 'white',
                       '&.Mui-selected': {
-                        backgroundColor: '#00ff88',
-                        color: '#000'
+                        backgroundColor: '#4c2badff',
+                        color: '#ffffffff'
                       }
                     }
                   }}
@@ -201,7 +208,6 @@ function ReviewsPage() {
           </Container>
         </div>
         </div>
-
         {/* Модальное окно */}
         <Modal
           open={openModal}
@@ -221,8 +227,8 @@ function ReviewsPage() {
               width: isMobile ? '90%' : '600px',
               maxWidth: '90vw',
               maxHeight: '80vh',
-              bgcolor: '#1a1a1a',
-              border: '2px solid #00ff88',
+              bgcolor: 'rgba(8, 20, 46, 0.8)',
+              border: '2px solid rgba(0, 200, 255, 0.3)',
               borderRadius: 2,
               boxShadow: 24,
               p: 4,
@@ -236,20 +242,20 @@ function ReviewsPage() {
                   position: 'absolute',
                   right: 8,
                   top: 8,
-                  color: '#00ff88'
+                  color: 'rgba(0, 200, 255, 0.3)'
                 }}
               >
                 <CloseIcon />
               </IconButton>
               
-              {selectedNews && (
+              {selectedReviews && (
                 <>
                   <Typography variant="h4" component="h2" sx={{ 
                     mb: 3, 
-                    color: '#00ff88',
+                    color: '#a8c8eaff',
                     fontWeight: 'bold'
                   }}>
-                    {selectedNews.title}
+                    {selectedReviews.userName}
                   </Typography>
                   
                   <Typography variant="body1" sx={{ 
@@ -257,14 +263,14 @@ function ReviewsPage() {
                     fontSize: '1.1rem',
                     color: 'rgba(255, 255, 255, 0.9)'
                   }}>
-                    {selectedNews.description}
+                    {selectedReviews.title}
                   </Typography>
 
-                  {selectedNews.image && (
+                  {selectedReviews.image && (
                     <Box sx={{ mt: 3, textAlign: 'center' }}>
                       <img 
-                        src={selectedNews.image} 
-                        alt={selectedNews.title}
+                        src={selectedReviews.image} 
+                        alt={selectedReviews.title}
                         style={{ 
                           maxWidth: '100%', 
                           borderRadius: '8px',

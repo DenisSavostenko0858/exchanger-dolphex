@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import logo from '../assets/image.png';
 import { newsData } from '../data/newsData';
 import '../App.css';
+import '../assets/styles/news-reviews.css';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -78,130 +79,119 @@ function NewsPage() {
           </div>
         </Container>
         <div style={{display: 'flex', justifyContent: 'center'}}>
-
-        <div className='news-container'>
-          <Container>
-            {/* Группы новостей */}
-            <div style={{ marginTop: '32px', marginBottom: '40px' }}>
-              {newsGroups.map((group, groupIndex) => (
-                <div key={groupIndex} className="group" style={{ 
-                  display: 'flex', 
-                  gap: '24px', 
-                  marginBottom: '32px',
-                  flexDirection: isMobile ? 'column' : 'row'
-                }}>
-                  {group.map((news) => (
-                    <Card 
-                      key={news.id}
-                      sx={{ 
-                        flex: '1 1 calc(50% - 12px)',
-                        minWidth: isMobile ? '100%' : '300px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        transition: 'transform 0.2s, box-shadow 0.2s',
-                        '&:hover': {
-                          transform: 'translateY(-4px)',
-                          boxShadow: 6,
-                        },
-                        borderRadius: 2,
-                        overflow: 'hidden',
-                        position: 'relative'
-                      }}
-                    >
-                      <CardContent sx={{ 
-                        flexGrow: 1, 
-                        p: 3, 
-                        display: 'flex', 
-                        flexDirection: 'column',
-                        justifyContent: 'space-between' // Это обеспечит прижатие кнопки к низу
-                      }}>
-                        <Box>
-                          <Typography 
-                            gutterBottom 
-                            variant="h6" 
-                            component="h3"
-                            sx={{ 
-                              fontWeight: 'bold',
-                              mb: 2,
-                              lineHeight: 1.3,
-                              fontSize: '1.1rem',
-                              color: 'black',
-                            }}
-                          >
-                            {news.title}
-                          </Typography>
-                          <Typography 
-                            variant="body2" 
-                            sx={{ 
-                              lineHeight: 1.6,
-                              display: '-webkit-box',
-                              WebkitLineClamp: 3,
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden',
-                              color: 'black',
-                              mb: 2
-                            }}
-                          >
-                            {news.description}
-                          </Typography>
-                        </Box>
-                        
-                        {/* Кнопка Подробно - всегда внизу */}
-                        <Box sx={{ 
+          <div className='news-container'>
+            <Container>
+              <div style={{ marginTop: '32px', marginBottom: '40px' }}>
+                {newsGroups.map((group, groupIndex) => (
+                  <div key={groupIndex} className="group" style={{ 
+                    display: 'flex', 
+                    gap: '24px', 
+                    marginBottom: '32px',
+                    flexDirection: isMobile ? 'column' : 'row'
+                  }}>
+                    {group.map((news) => (
+                      <Card 
+                        key={news.id}
+                        className='card-info-container'
+                        sx={{ 
+                          flex: '1 1 calc(50% - 12px)',
+                          minWidth: isMobile ? '100%' : '300px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          transition: 'transform 0.2s, box-shadow 0.2s',
+                          '&:hover': {
+                            transform: 'translateY(-4px)',
+                            boxShadow: 6,
+                          },
+                          borderRadius: 2,
+                          overflow: 'hidden',
+                          position: 'relative'
+                        }}
+                      >
+                        <CardContent sx={{ 
+                          flexGrow: 1, 
+                          p: 3, 
                           display: 'flex', 
-                          justifyContent: 'flex-start', // Выравнивание по левому краю
-                          mt: 'auto', // Прижимает к низу
-                          pt: 2 // Отступ сверху
+                          flexDirection: 'column',
+                          justifyContent: 'space-between' // Это обеспечит прижатие кнопки к низу
                         }}>
-                          <Button
-                            variant="outlined"
-                            onClick={() => handleOpenModal(news)}
-                            sx={{
-                              color: '#00ff88',
-                              borderColor: '#00ff88',
-                              '&:hover': {
-                                borderColor: '#00ff88',
-                                backgroundColor: 'rgba(0, 255, 136, 0.1)'
-                              }
-                            }}
-                          >
-                            Подробно
-                          </Button>
-                        </Box>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              ))}
-            </div>
-
-            {/* Пагинация */}
-            {totalPages > 1 && (
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 4 }}>
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  color="primary"
-                  size={isMobile ? "small" : "medium"}
-                  sx={{
-                    '& .MuiPaginationItem-root': {
-                      borderRadius: 2,
-                      fontWeight: 'bold',
-                      color: 'white',
-                      '&.Mui-selected': {
-                        backgroundColor: '#00ff88',
-                        color: '#000'
+                          <Box>
+                            <Typography 
+                              className='title'
+                              gutterBottom 
+                              variant="h6" 
+                              component="h3"
+                              sx={{ 
+                                fontWeight: 'bold',
+                                mb: 2,
+                                lineHeight: 1.3,
+                                fontSize: '1.1rem',
+                              }}
+                            >
+                              {news.title}
+                            </Typography>
+                            <Typography 
+                              variant="body2" 
+                              sx={{ 
+                                lineHeight: 1.6,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                                color: "white",
+                                mb: 2
+                              }}
+                            >
+                              {news.description}
+                            </Typography>
+                          </Box>
+                          {/* Кнопка подробнее */}
+                          <Box sx={{ 
+                            display: 'flex', 
+                            justifyContent: 'flex-start', 
+                            mt: 'auto', 
+                            pt: 2 
+                          }}>
+                            <Button
+                              variant="outlined"
+                              onClick={() => handleOpenModal(news)}
+                              className='btn-card'
+                            >
+                              Подробно
+                            </Button>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              {/* Пагинация */}
+              {totalPages > 1 && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 4 }}>
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                    size={isMobile ? "small" : "medium"}
+                    sx={{
+                      '& .MuiPaginationItem-root': {
+                        borderRadius: 2,
+                        fontWeight: 'bold',
+                        color: 'white',
+                        '&.Mui-selected': {
+                          backgroundColor: '#4c2badff',
+                          color: '#ffffffff'
+                        }
                       }
-                    }
-                  }}
-                />
-              </Box>
-            )}
-          </Container>
+                    }}
+                  />
+                </Box>
+              )}
+            </Container>
+          </div>
         </div>
-        </div>
-
         {/* Модальное окно */}
         <Modal
           open={openModal}
@@ -221,8 +211,8 @@ function NewsPage() {
               width: isMobile ? '90%' : '600px',
               maxWidth: '90vw',
               maxHeight: '80vh',
-              bgcolor: '#1a1a1a',
-              border: '2px solid #00ff88',
+              bgcolor: 'rgba(8, 20, 46, 0.8)',
+              border: '2px solid rgba(0, 200, 255, 0.3)',
               borderRadius: 2,
               boxShadow: 24,
               p: 4,
@@ -236,7 +226,7 @@ function NewsPage() {
                   position: 'absolute',
                   right: 8,
                   top: 8,
-                  color: '#00ff88'
+                  color: 'rgba(0, 200, 255, 0.3)'
                 }}
               >
                 <CloseIcon />
@@ -246,7 +236,7 @@ function NewsPage() {
                 <>
                   <Typography variant="h4" component="h2" sx={{ 
                     mb: 3, 
-                    color: '#00ff88',
+                    color: '#a8c8eaff',
                     fontWeight: 'bold'
                   }}>
                     {selectedNews.title}
