@@ -2,33 +2,10 @@ import DrawerAppBar from '../components/header'
 import ExchangeComponent from '../components/exchanger'
 import ContainerHead from '../components/containers/container-text-head'
 import Container from '../components/containers/container'
-import { useEffect, useState } from 'react'
 
 import '../App.css'
 
 function App() {
-    // Функция для прокрутки вверх
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth', 
-    });
-  };
-  const [showButton, setShowButton] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <>
     <DrawerAppBar />
@@ -90,15 +67,6 @@ function App() {
           <p>Направлений для обмена на площадке более чем достаточно, и всегда присутствуют резервы, а система безопасности, включающая в себя SSL-сертификат и многое другое, заслуживает уважения.</p>
       </Container>
     </div>
-    {/* Кнопка "Наверх" */}
-      {showButton && (
-        <button 
-          onClick={scrollToTop}
-          className="scroll-to-top-button"
-        >
-          ↑ Наверх
-        </button>
-      )}
     </>
   )
 }

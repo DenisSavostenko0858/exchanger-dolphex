@@ -1,33 +1,10 @@
 import DrawerAppBar from '../components/header'
 import Container from '../components/containers/container'
-import { useEffect, useState } from 'react'
 import logo from '../assets/image.png'; 
 import Box from '@mui/material/Box';
 import '../App.css'
 
 function App() {
-    // Функция для прокрутки вверх
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth', 
-    });
-  };
-  const [showButton, setShowButton] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <>
     <DrawerAppBar />
@@ -141,15 +118,6 @@ function App() {
         <p>— обработка персональных данных пользователей осуществляется безопасным способом с применением современных методов шифрования.</p>
         <p>— оператор реализует правовые, организационные и технические меры по обеспечению безопасности персональных данных, исходя из уровней защищенности и актуальных угроз безопасности персональных данных</p>
     </Container>
-    {/* Кнопка "Наверх" */}
-      {showButton && (
-        <button 
-          onClick={scrollToTop}
-          className="scroll-to-top-button"
-        >
-          ↑ Наверх
-        </button>
-      )}
     </>
   )
 }
