@@ -1,6 +1,7 @@
 import './App.css'
 import { Routers } from "./Router"
 import { useEffect, useState } from 'react'
+import Footer from './components/footer'
 
 function App() {
         // Функция для прокрутки вверх
@@ -27,6 +28,7 @@ function App() {
   return (
     <>
     <Routers></Routers>
+        <Footer />
       {/* Кнопка "Наверх" */}
       {showButton && (
         <button 
