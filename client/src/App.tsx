@@ -28,7 +28,7 @@ function App() {
   return (
     <>
     <Routers></Routers>
-        <Footer />
+    <Footer/>
       {/* Кнопка "Наверх" */}
       {showButton && (
         <button 
