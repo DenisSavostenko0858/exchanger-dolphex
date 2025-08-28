@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import  Home  from './pages/Home';
-import  News  from './pages/News';
+import Home  from './pages/Home';
+import News  from './pages/News';
 import Reviews from './pages/Reviews';
 import NotFound from './pages/NotFound';
 import Rules from './pages/Rules';  
@@ -11,7 +11,7 @@ import Appeal from './pages/Appeal';
 
 export const Routers = () => {
   return (
-    <Router>
+    <Router basename={"/exchanger-dolphex/client"}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
@@ -19,11 +19,6 @@ export const Routers = () => {
         <Route path="/rules" element={<Rules />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/appeal" element={<Appeal />} />
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {
-          <Route path="/logout" element={< />} />
-        */}
       </Routes>
     </Router>
   );
