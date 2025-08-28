@@ -11,7 +11,7 @@ import Appeal from './pages/Appeal';
 
 export const Routers = () => {
   return (
-    <Router basename={"/exchanger-dolphex/client"}>
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
